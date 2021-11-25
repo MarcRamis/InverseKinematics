@@ -113,6 +113,9 @@ namespace ENTICourse.IK
 
         public void ApproachTarget(Vector3 target)
         {
+            if (DistanceFromTarget(target, Solution) < StopThreshold)
+                return;
+
             //TODO
             for (int i = 0; i < Joints.Length; i++)
             {
@@ -120,6 +123,9 @@ namespace ENTICourse.IK
                 Solution[i] -= LearningRate * gradient; // Iteration step
 
                 Joints[i].MoveArm(Solution[i]);
+
+                if (DistanceFromTarget(target, Solution) < StopThreshold)
+                    return;
             }
         }
 
